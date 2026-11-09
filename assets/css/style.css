@@ -461,7 +461,6 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
   .nav-links a { padding: .95rem .55rem; font-size: .66rem; letter-spacing: .08em; } /* 44 pt touch targets */
   .theme-toggle { width: 44px; height: 44px; }
   .cards { grid-template-columns: 1fr; }
-  .viz[data-viz="autoresearch"] { aspect-ratio: 16 / 10; } /* two scenes side by side need a little more height on a phone */
   .lead { font-size: 1.05rem; }
   .pub, .timeline li { grid-template-columns: 1fr; gap: .35rem; }
   .pub { padding: 1.4rem 1.3rem; }

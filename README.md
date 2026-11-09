@@ -19,7 +19,7 @@ Opening `index.html` directly also works. Only the self-hosted fallback font is 
 | `index.html` | All content: hero, research, publications, news, contact |
 | `_cv/` | Private LaTeX sources of the CV (git-ignored); publish only `assets/cv.pdf` |
 | `assets/css/style.css` | Design: Futura, with self-hosted Jost (OFL) as fallback; light and dark |
-| `assets/js/viz.js` | Canvas visualizations: hero density (soft at the top, sharper as you scroll), generative regression (engression style), kernel score vs log-likelihood, spacecraft planning with and without its own uncertainty, autoresearch (many agents, with and without context management) |
+| `assets/js/viz.js` | Canvas visualizations: hero density (soft at the top, sharper as you scroll), generative regression (engression style), kernel score vs log-likelihood, spacecraft planning with and without its own uncertainty, autoresearch (a tree of ideas grown by agents, pruned by an orchestrator) |
 | `assets/js/main.js` | Theme toggle, navigation, BibTeX, easter eggs |
 | `404.html` | Proof by contradiction |
 

@@ -4,7 +4,7 @@
    - [data-viz="engression"]  a generative model of p(y | x), as in engression
    - [data-viz="kernel"]      Gaussian kernel score landscape over (μ, σ)
    - [data-viz="space"]       a spacecraft planning with and without its own uncertainty, 24 noisy flights each
-   - [data-viz="autoresearch"] many agents around a shared memory, with and without context management
+   - [data-viz="autoresearch"] a tree of ideas grown by agents and pruned by an orchestrator
    Each canvas only animates while it is on screen.
    ========================================================================== */
 (() => {
@@ -626,97 +626,115 @@
   }
 
   /* ======================================================================
-     04 · AUTORESEARCH · many agents, with and without context management
+     04 · AUTORESEARCH · a tree of ideas, grown by many agents and pruned by an orchestrator
      ====================================================================== */
   function autoresearch(v) {
-    // A schematic of many agents around a shared memory, run twice. Each round, the agents send
-    // their results to the middle and get context back. Without context management everything
-    // is kept and handed to everyone: the memory overflows, every agent's context fills up with
-    // noise, and the best result stalls. With it, an orchestrator keeps a few good results,
-    // drops the rest, and hands each agent a short, relevant context: progress continues.
-    const NA = 8, ROUND = 2.2, ROUNDS = 12;
-    let t0 = null;
-    v.onClick = () => { t0 = null; v.dirty = true; };
-    const best = (managed, r) => (managed ? 0.95 * (1 - Math.exp(-r / 5)) : 0.2 * (1 - Math.exp(-r / 1.5)));
+    // A tree of ideas grown by many agents. Each round, every kept idea is explored by agents
+    // that propose a few follow-ups; each proposal is evaluated, the orchestrator keeps the best
+    // K and prunes the rest. After the last round the best line of ideas, from the question to
+    // the result, lights up.
+    const D = 5, K = 3, KIDS = 3, STEP = 1.5, HOLD = 3; // rounds, kept per round, proposals per idea, s per round
+    let levels = [], t0 = null, seed = 7;
+
+    function newRun() {
+      const rnd = mulberry32(seed++), rn = randnFrom(rnd);
+      // tidy layout: in every round the kept ideas, left to right, each get one of K groups,
+      // and their proposals sit side by side in that group (x in 0…1)
+      levels = [[{ s: 0, p: -1, kept: true, x: 0.5 }]];
+      for (let d = 1; d <= D; d++) {
+        const parents = levels[d - 1].map((n, i) => [n, i]).filter(([n]) => n.kept).sort((a, b) => a[0].x - b[0].x);
+        const cand = [];
+        parents.forEach(([par, pi], g) => {
+          for (let c = 0; c < KIDS; c++) {
+            const x = (g + 0.5) / parents.length + ((c - (KIDS - 1) / 2) * 0.62) / (parents.length * KIDS);
+            cand.push({ s: par.s + 0.06 + 0.16 * rn(), p: pi, kept: false, x });
+          }
+        });
+        [...cand].sort((a, b) => b.s - a.s).slice(0, K).forEach((n) => (n.kept = true));
+        levels.push(cand);
+      }
+      t0 = null;
+    }
+    newRun();
+    v.onClick = () => { newRun(); v.dirty = true; };
 
     v.frame = (t) => {
       if (t0 === null) t0 = t;
       if (reduced && !v.dirty) return;
       if (!reduced && !v.dirty && t - (v.lastDraw || 0) < 1 / 30) return;
       v.lastDraw = t; v.dirty = false;
-      const el = reduced ? ROUND * 9.5 : (t - t0) % (ROUND * (ROUNDS + 1));
-      const r = Math.min(ROUNDS, Math.floor(el / ROUND)), ph = (el % ROUND) / ROUND;
+      const total = D * STEP + 1 + HOLD;
+      let el = reduced ? total - HOLD : t - t0;
+      if (el > total) { newRun(); t0 = t; el = 0; }
+      const round = Math.min(D, Math.floor(el / STEP) + 1), ph = Math.min(1, (el - (round - 1) * STEP) / STEP);
+      const done = el >= D * STEP, glow = Math.min(1, Math.max(0, (el - D * STEP) / 1));
 
-      const { ctx, w, h } = v, pad = 14, top = pad + 18, gap = 18;
-      const side = Math.min(h - top - pad - 26, (w - 2 * pad - gap) / 2);
-      const x0s = [(w - 2 * side - gap) / 2, (w - 2 * side - gap) / 2 + side + gap];
+      const { ctx, w, h } = v, pad = 18, top = 46, bot = h - 26;
+      const Y = (d) => top + (d / D) * (bot - top);
+      const X = (d, i) => pad + 10 + levels[d][i].x * (w - 2 * pad - 20);
       ctx.clearRect(0, 0, w, h);
+      const ease = (u) => u * u * (3 - 2 * u);
+      // edges are soft S-curves (vertical at both ends); bez(u) gives a point along one
+      const bez = (x0, y0, x1, y1, u) => {
+        const ym = (y0 + y1) / 2, v1 = 1 - u;
+        return [v1 ** 3 * x0 + 3 * v1 * v1 * u * x0 + 3 * v1 * u * u * x1 + u ** 3 * x1,
+                v1 ** 3 * y0 + 3 * v1 * v1 * u * ym + 3 * v1 * u * u * ym + u ** 3 * y1];
+      };
 
-      [false, true].forEach((managed, k) => {
-        const cx = x0s[k] + side / 2, cy = top + side / 2, ring = side * 0.34;
-        const col = managed ? C.accent : C.muted;
-        // how full and how relevant each agent's context is after r rounds
-        const fill = managed ? 0.45 : Math.min(1, 0.12 + r / 6);
-        const useful = managed ? 0.9 : Math.max(0.08, 1 / (1 + 0.7 * r));
-        const lost = !managed && fill >= 1; // context full of noise: the agents go in circles
-        const notes = managed ? Math.min(5, r) : 6 * r; // what the shared memory holds
+      // best line of ideas, from the end back to the question
+      const best = [];
+      if (done) {
+        let i = levels[D].reduce((bi, n, j) => (n.s > levels[D][bi].s ? j : bi), 0);
+        for (let d = D; d >= 0; d--) { best.push([d, i]); i = levels[d][i].p; }
+      }
+      const onBest = new Set(best.map(([d, i]) => d + ":" + i));
 
-        // spokes first, so the memory box sits on top of them
-        ctx.strokeStyle = C.line; ctx.globalAlpha = 0.6; ctx.lineWidth = 1;
-        for (let a = 0; a < NA; a++) {
-          const an = (a / NA) * TAU - Math.PI / 2;
-          ctx.beginPath(); ctx.moveTo(cx + Math.cos(an) * ring, cy + Math.sin(an) * ring); ctx.lineTo(cx, cy); ctx.stroke();
-        }
-        ctx.globalAlpha = 1;
-
-        // the shared memory in the middle
-        const bw = side * 0.26, bh = side * 0.2;
-        ctx.strokeStyle = C.line; ctx.lineWidth = 1; ctx.fillStyle = C.surface;
-        ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(cx - bw / 2, cy - bh / 2, bw, bh, 4); else ctx.rect(cx - bw / 2, cy - bh / 2, bw, bh); ctx.fill(); ctx.stroke();
-        const lineGap = 3.2, fit = Math.floor((bh - 6) / lineGap);
-        for (let i = 0; i < notes; i++) {
-          const inside = i < fit, y = inside ? cy + bh / 2 - 4 - i * lineGap : cy - bh / 2 - 3 - (i - fit) * 2.2;
-          const wid = (bw - 10) * (0.55 + 0.45 * ((i * 37) % 10) / 10);
-          ctx.globalAlpha = inside ? 0.9 : Math.max(0.15, 0.6 - (i - fit) * 0.02);
-          ctx.fillStyle = managed ? C.accent : C.muted;
-          if (y > top - 4) ctx.fillRect(cx - wid / 2, y, wid, 1.6);
-        }
-        ctx.globalAlpha = 1;
-        text(ctx, "memory", cx, cy + bh / 2 + 11, C.muted, 10, "center");
-
-        // agents in a ring, each with a context bar
-        for (let a = 0; a < NA; a++) {
-          const an = (a / NA) * TAU - Math.PI / 2, ax = cx + Math.cos(an) * ring, ay = cy + Math.sin(an) * ring;
-          // messages: results inward in the first half of a round, context outward in the second
-          if (!reduced && r < ROUNDS) {
-            const inward = ph < 0.45, u = inward ? ph / 0.45 : ph > 0.55 ? (ph - 0.55) / 0.45 : null;
-            if (u !== null) {
-              const e = u * u * (3 - 2 * u), fx = inward ? ax : cx, fy = inward ? ay : cy, tx = inward ? cx : ax, ty = inward ? cy : ay;
-              const kept = managed ? (a + r) % 3 === 0 : true; // the orchestrator keeps only some results
-              const good = managed && (inward ? kept : true);
-              ctx.fillStyle = good ? C.accent : C.muted;
-              ctx.globalAlpha = inward && !kept && u > 0.7 ? (1 - u) / 0.3 : lost ? 0.5 : 0.9;
-              const size = !inward && !managed ? 1.8 + 2.2 * fill : 2.2;
-              ctx.beginPath(); ctx.arc(fx + (tx - fx) * e, fy + (ty - fy) * e, size, 0, TAU); ctx.fill();
-              ctx.globalAlpha = 1;
-            }
+      for (let d = 1; d <= Math.min(round, D); d++) {
+        const current = d === round && !done;
+        const grow = current ? ease(Math.min(1, ph / 0.5)) : 1;           // edges grow while agents explore
+        const judged = current ? Math.max(0, (ph - 0.55) / 0.35) : 1;   // then the orchestrator prunes
+        levels[d].forEach((n, i) => {
+          const x0 = X(d - 1, n.p), y0 = Y(d - 1), x1 = X(d, i), y1 = Y(d);
+          const [xe, ye] = bez(x0, y0, x1, y1, grow);
+          const pruned = !n.kept && judged > 0;
+          const fade = pruned ? 1 - 0.75 * Math.min(1, judged) : 1;
+          const isBest = onBest.has(d + ":" + i) && onBest.has(d - 1 + ":" + n.p);
+          ctx.setLineDash(pruned ? [3, 3] : []);
+          ctx.strokeStyle = isBest ? C.accent : C.muted; ctx.lineWidth = isBest ? 1 + 1.4 * glow : 1;
+          ctx.globalAlpha = (isBest ? 0.5 + 0.5 * glow : 0.55) * fade;
+          ctx.beginPath(); ctx.moveTo(x0, y0);
+          for (let k = 1; k <= 16; k++) ctx.lineTo(...bez(x0, y0, x1, y1, (k / 16) * grow));
+          ctx.stroke();
+          ctx.setLineDash([]);
+          if (current && grow < 1) { // an agent on its way
+            ctx.globalAlpha = 1; ctx.fillStyle = C.accent; ctx.beginPath(); ctx.arc(xe, ye, 2.6, 0, TAU); ctx.fill();
+          } else {
+            ctx.globalAlpha = fade;
+            ctx.beginPath(); ctx.arc(x1, y1, isBest ? 3.5 + glow : 3.2, 0, TAU);
+            if (pruned) { ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.stroke(); }
+            else { ctx.fillStyle = isBest ? C.accent : C.soft; ctx.fill(); }
           }
-          ctx.fillStyle = C.surface; ctx.strokeStyle = lost ? C.muted : col; ctx.lineWidth = 1.8;
-          ctx.beginPath(); ctx.arc(ax, ay, 6, 0, TAU); ctx.fill(); ctx.stroke();
-          if (lost) { ctx.fillStyle = C.muted; ctx.beginPath(); ctx.arc(ax, ay, 2.2, 0, TAU); ctx.fill(); }
-          // context bar, outside the ring
-          const bx = cx + Math.cos(an) * (ring + 13) - 2.5, by = cy + Math.sin(an) * (ring + 13) - 8, H = 16;
-          ctx.strokeStyle = lost ? C.ink : C.line; ctx.lineWidth = 1; ctx.strokeRect(bx, by, 5, H);
-          const fu = fill * useful, fn = fill - fu;
-          ctx.fillStyle = C.accent; ctx.fillRect(bx, by + H * (1 - fu), 5, H * fu);
-          ctx.fillStyle = C.muted; ctx.globalAlpha = 0.7; ctx.fillRect(bx, by + H * (1 - fu - fn), 5, H * fn); ctx.globalAlpha = 1;
-        }
+        });
+      }
+      ctx.globalAlpha = 1;
 
-        text(ctx, managed ? "managed context" : "no context management", x0s[k], 23, col, 10);
-        const b = best(managed, r);
-        text(ctx, `best result +${b.toFixed(2)}${!managed && r > 4 ? ", stuck" : ""}`, x0s[k], top + side + 20, managed ? C.accent : C.muted, 10);
-      });
-      text(ctx, `round ${r}`, w - 18, 23, C.muted, 10, "right");
+      // the question at the top and, at the end, the result
+      ctx.fillStyle = C.ink; ctx.beginPath(); ctx.arc(X(0, 0), Y(0), 5, 0, TAU); ctx.fill();
+      text(ctx, "question", X(0, 0) + 10, Y(0) + 4, C.muted, 10);
+      if (done) {
+        const [d, i] = best[0], x = X(d, i), y = Y(d), r = 4 + 5 * ease(glow);
+        ctx.fillStyle = C.accent; ctx.beginPath();
+        for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + (k * Math.PI) / 5, rr = k % 2 ? r * 0.45 : r; ctx.lineTo(x + Math.cos(a) * rr, y + Math.sin(a) * rr); }
+        ctx.closePath(); ctx.fill();
+        if (glow > 0.3) text(ctx, "result", x, y + 18, C.accent, 10, "center");
+      }
+
+      // legend, on the same line as in the other cards
+      ctx.fillStyle = C.soft; ctx.beginPath(); ctx.arc(22, 19, 3.2, 0, TAU); ctx.fill();
+      text(ctx, "kept", 30, 23, C.muted, 10);
+      ctx.strokeStyle = C.muted; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(70, 19, 3.2, 0, TAU); ctx.stroke();
+      text(ctx, "pruned", 78, 23, C.muted, 10);
+      text(ctx, done ? "best line of ideas" : `round ${round} of ${D} · ${K} of ${levels[round].length} kept`, w - 18, 23, done ? C.accent : C.muted, 10, "right");
     };
   }
 

@@ -41,7 +41,7 @@
       try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261110p">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261110r">
 
   <script type="application/ld+json">
   {
@@ -220,12 +220,12 @@
         </article>
 
         <article class="card">
-          <canvas class="viz" data-viz="autoresearch" role="img" aria-label="Two rings of eight agents around a shared memory. Without context management, everything is kept and handed to everyone: the memory overflows, the agents' contexts fill with noise and the best result stalls. With managed context, only a few good results are kept and passed on, and the best result keeps improving"></canvas>
+          <canvas class="viz" data-viz="autoresearch" role="img" aria-label="A tree of ideas growing from a question: in each round agents explore follow-up ideas, the best three are kept and the rest are pruned; at the end the best line of ideas leads to the result"></canvas>
           <div class="card-body">
             <p class="card-index">04</p>
             <h3>Autoresearch</h3>
             <p>Fascinated by the capabilities of frontier LLMs, I have lately become interested in autoresearch. If every agent is equally good, why are ten thousand of them better than one? I am interested in how to orchestrate them: designing the loops they work in, managing what context each agent gets to see, and verifying what they find.</p>
-            <p class="viz-hint">Same agents, same memory: what matters is what each one gets to see · click to restart</p>
+            <p class="viz-hint">Agents explore, an orchestrator keeps the best and prunes the rest · click for a new run</p>
           </div>
         </article>
       </div>
@@ -312,6 +312,10 @@
       <ul class="timeline">
         <li>
           <time datetime="2026-10">Oct 2026</time>
+          <p>Took part in the <a href="https://www.hlrs.de/training/2026/hack-ai">European AI Hackathon</a>, co-organized by the Leibniz Supercomputing Centre (LRZ) with NVIDIA, as “the Predictables”: five PhD students from our chair, one of 11 teams selected from 64 applications, mentored by LRZ and NVIDIA. Our question: can an LLM forecaster learn from questions that have not resolved yet?</p>
+        </li>
+        <li>
+          <time datetime="2026-10">Oct 2026</time>
           <p>New preprint: <a href="https://arxiv.org/abs/2610.12096">SCORE: Spectral Correlation Estimation for Multivariate Gaussians</a>.</p>
         </li>
         <li>
@@ -382,7 +386,7 @@
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/viz.js?v=20261110p" defer></script>
-  <script src="assets/js/main.js?v=20261110p" defer></script>
+  <script src="assets/js/viz.js?v=20261110r" defer></script>
+  <script src="assets/js/main.js?v=20261110r" defer></script>
 </body>
 </html>
