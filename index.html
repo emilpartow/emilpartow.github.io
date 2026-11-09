@@ -41,7 +41,7 @@
       try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261110n">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261110o">
 
   <script type="application/ld+json">
   {
@@ -257,11 +257,11 @@
               monocular depth estimation and spatial weather prediction.
             </p>
             <div class="pub-actions">
-              <a class="chip" href="https://arxiv.org/abs/2610.12096">arXiv</a>
-              <a class="chip" href="https://arxiv.org/pdf/2610.12096">PDF</a>
-              <button class="chip bib-toggle" type="button" aria-expanded="false">BibTeX</button>
+              <a class="chip" href="https://arxiv.org/abs/2610.12096">arXiv<span class="sr-only">: SCORE</span></a>
+              <a class="chip" href="https://arxiv.org/pdf/2610.12096">PDF<span class="sr-only">: SCORE</span></a>
+              <button class="chip bib-toggle" type="button" aria-expanded="false" aria-controls="bib-score">BibTeX</button>
             </div>
-            <div class="bibtex" hidden>
+            <div class="bibtex" id="bib-score" hidden>
               <pre><code>@article{buelte2026score,
   title   = {{SCORE}: Spectral Correlation Estimation for Multivariate Gaussians},
   author  = {B{\"u}lte, Christopher and Partow, Emil and Gupta, Astha and Esser, Pascal and Kutyniok, Gitta},
@@ -286,11 +286,11 @@
               ReLU<sup>k+1</sup> neural-ODE flows, and prove that the resulting estimator is PAC consistent.
             </p>
             <div class="pub-actions">
-              <a class="chip" href="https://arxiv.org/abs/2507.01533">arXiv</a>
-              <a class="chip" href="https://arxiv.org/pdf/2507.01533">PDF</a>
-              <button class="chip bib-toggle" type="button" aria-expanded="false">BibTeX</button>
+              <a class="chip" href="https://arxiv.org/abs/2507.01533">arXiv<span class="sr-only">: Sparse grid quadrature</span></a>
+              <a class="chip" href="https://arxiv.org/pdf/2507.01533">PDF<span class="sr-only">: Sparse grid quadrature</span></a>
+              <button class="chip bib-toggle" type="button" aria-expanded="false" aria-controls="bib-quad">BibTeX</button>
             </div>
-            <div class="bibtex" hidden>
+            <div class="bibtex" id="bib-quad" hidden>
               <pre><code>@article{gottschalk2025consistency,
   title   = {Consistency of Learned Sparse Grid Quadrature Rules using {NeuralODEs}},
   author  = {Gottschalk, Hanno and Partow, Emil and Riedlinger, Tobias J.},
@@ -372,14 +372,17 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <p>© <span id="year">2026</span> Emil Partow</p>
-        <button class="qed" type="button" aria-label="Q.E.D.">∎</button>
+        <div class="footer-actions">
+          <button class="motion-toggle" type="button">Pause animations</button>
+          <button class="qed" type="button" aria-label="Q.E.D.">∎</button>
+        </div>
       </div>
     </footer>
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/viz.js?v=20261110n" defer></script>
-  <script src="assets/js/main.js?v=20261110n" defer></script>
+  <script src="assets/js/viz.js?v=20261110o" defer></script>
+  <script src="assets/js/main.js?v=20261110o" defer></script>
 </body>
 </html>

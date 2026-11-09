@@ -356,6 +356,11 @@ pre code { background: none; padding: 0; }
 .timeline li + li { border-top: 1px solid var(--line); }
 .timeline time { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: .2rem; }
 .timeline p { margin: 0; }
+/* links inside running text are underlined, so they do not depend on colour alone */
+.timeline a, .card p:not(.card-link) a, address a, .contact-lead a {
+  text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
 
 /* ---------- outro ----------
    The pattern from the top comes back behind contact and footer, already in its sharp,
@@ -383,6 +388,13 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
 .site-footer { padding: 2.5rem 0 3rem; font-size: .8rem; color: var(--muted); }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; padding-top: .5rem; }
 .footer-inner p { margin: 0; letter-spacing: .06em; }
+.footer-actions { display: flex; align-items: center; gap: 1rem; }
+.motion-toggle {
+  font: 500 .72rem/1 var(--font); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+  background: none; border: 1px solid var(--line); border-radius: 999px; padding: .55rem .8rem; cursor: pointer;
+}
+.motion-toggle:hover, .motion-paused .motion-toggle { color: var(--ink); border-color: var(--ink-soft); }
+.motion-paused .scroll-cue span { animation: none; }
 .qed {
   font: 1rem/1 var(--font); color: var(--muted); background: none; border: 0; padding: .2rem; cursor: pointer;
   transition: color .2s, transform .3s;

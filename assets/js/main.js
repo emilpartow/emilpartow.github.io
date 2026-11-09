@@ -42,6 +42,25 @@
   }, { rootMargin: "-45% 0px -50% 0px" });
   $$("section[id]").forEach((s) => spy.observe(s));
 
+  /* ---------- pause all animations (remembered); with reduced motion everything is still anyway ---------- */
+  const motionBtn = $(".motion-toggle");
+  if (motionBtn) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) motionBtn.hidden = true;
+    const setPaused = (on) => {
+      window.EP?.pause(on);
+      root.classList.toggle("motion-paused", on);
+      motionBtn.textContent = on ? "Play animations" : "Pause animations";
+    };
+    let saved = false;
+    try { saved = localStorage.getItem("motion") === "paused"; } catch {}
+    setPaused(saved);
+    motionBtn.addEventListener("click", () => {
+      const on = !root.classList.contains("motion-paused");
+      setPaused(on);
+      try { localStorage.setItem("motion", on ? "paused" : "playing"); } catch {}
+    });
+  }
+
   /* ---------- hero: the background comes into focus as you scroll (--p runs 0 → 1) ---------- */
   const hero = $(".hero"), soft = $("#flow"), sharp = $("#flow-sharp");
   if (hero && soft && sharp) {

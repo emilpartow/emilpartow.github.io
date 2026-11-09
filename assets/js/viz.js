@@ -682,7 +682,7 @@
           if (y > top - 4) ctx.fillRect(cx - wid / 2, y, wid, 1.6);
         }
         ctx.globalAlpha = 1;
-        text(ctx, "memory", cx, cy + bh / 2 + 11, C.muted, 9, "center");
+        text(ctx, "memory", cx, cy + bh / 2 + 11, C.muted, 10, "center");
 
         // agents in a ring, each with a context bar
         for (let a = 0; a < NA; a++) {
@@ -735,8 +735,10 @@
   window.addEventListener("load", recolor); // the stylesheet has certainly applied by now
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", recolor);
 
+  let paused = false; // set from the "Pause animations" button in the footer
   function loop(now) {
     requestAnimationFrame(loop);
+    if (paused) return;
     const t = now / 1000;
     if (!colorsReady) recolor();
     for (const v of vizzes) {
@@ -748,5 +750,8 @@
   requestAnimationFrame(loop);
 
   // hooks for the easter eggs in main.js
-  window.EP = { heat: () => hero && hero.heat && hero.heat() };
+  window.EP = {
+    heat: () => hero && hero.heat && hero.heat(),
+    pause: (on) => { paused = on; },
+  };
 })();
