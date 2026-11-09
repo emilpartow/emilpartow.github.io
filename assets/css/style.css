@@ -471,6 +471,20 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
   .outro { padding-top: 1.5rem; }
   .section.contact { padding: 4rem 0 2rem; }
 }
+/* small tablets: the lead runs beside the portrait (as on desktop) instead of leaving a hole next to the name */
+@media (min-width: 641px) and (max-width: 880px) {
+  .hero-card { grid-template-rows: auto auto auto auto auto; column-gap: 2rem; }
+  .hero .eyebrow, .hero .lead { grid-column: 1; }
+  .hero .lead { grid-row: 3; margin-top: 1rem; margin-bottom: 1.6rem; }
+  .hero .links { grid-row: 4; }
+  .hero .orgs { grid-row: 5; }
+  .hero-photo { grid-row: 1 / span 3; align-self: start; }
+}
+/* phones and small tablets: the eyebrow breaks after "PhD Student", never leaving a dot at a line end */
+@media (max-width: 880px) {
+  .eyebrow-sep { display: none; }
+  .eyebrow-field { display: block; }
+}
 @media (max-width: 640px) {
   body { font-size: 16px; }
   .container, .hero-card { width: min(100% - 2rem, var(--maxw)); }
@@ -535,6 +549,9 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
   .qed { min-width: 44px; min-height: 44px; margin: -11px -15px -11px -8px; }
 }
 
+@media (max-width: 400px) {
+  .nav-links a { letter-spacing: .05em; }
+}
 @media (max-width: 360px) {
   .nav-brand { display: none; }
   .nav-links a { padding-inline: .4rem; letter-spacing: .04em; } /* keep the 44px height */
