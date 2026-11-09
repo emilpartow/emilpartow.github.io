@@ -41,7 +41,7 @@
       try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261110r">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261110s">
 
   <script type="application/ld+json">
   {
@@ -125,7 +125,15 @@
 
   <header class="site-header">
     <nav class="nav glass" aria-label="Main">
-      <a class="nav-brand" href="#top" aria-label="Back to top">EP</a>
+      <a class="nav-brand" href="#top" aria-label="Emil Partow, back to top">
+        <svg viewBox="0 0 64 64" width="26" height="26" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="3.2">
+            <ellipse cx="32" cy="32" rx="26" ry="15" transform="rotate(-25 32 32)"/>
+            <ellipse cx="32" cy="32" rx="14" ry="8" transform="rotate(-25 32 32)"/>
+          </g>
+          <circle class="nav-brand-dot" cx="32" cy="32" r="5"/>
+        </svg>
+      </a>
       <ul class="nav-links">
         <li><a href="#research">Research</a></li>
         <li><a href="#publications">Papers</a></li>
@@ -386,7 +394,7 @@
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/viz.js?v=20261110r" defer></script>
-  <script src="assets/js/main.js?v=20261110r" defer></script>
+  <script src="assets/js/viz.js?v=20261110s" defer></script>
+  <script src="assets/js/main.js?v=20261110s" defer></script>
 </body>
 </html>

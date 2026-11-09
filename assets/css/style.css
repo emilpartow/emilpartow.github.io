@@ -166,8 +166,12 @@ pre code { background: none; padding: 0; }
   display: flex; align-items: center; gap: 1.6rem;
   height: 52px; padding: 0 .6rem 0 1.3rem; border-radius: 999px;
 }
-.nav-brand { font-weight: 700; font-size: .9rem; letter-spacing: .18em; color: var(--ink); }
+/* the mark: two contour lines of a density and its mode, the same as the favicon */
+.nav-brand { display: grid; place-items: center; width: 34px; height: 34px; margin-left: -.4rem; border-radius: 50%; color: var(--ink); transition: color .2s, transform .4s cubic-bezier(.2, .7, .2, 1); }
+.nav-brand svg { display: block; }
+.nav-brand-dot { fill: var(--accent); }
 .nav-brand:hover { text-decoration: none; color: var(--accent); }
+@media (hover: hover) { .nav-brand:hover { transform: rotate(-20deg); } }
 .nav-links { display: flex; gap: .3rem; list-style: none; margin: 0; padding: 0; }
 .nav-links a {
   display: block; padding: .38rem .85rem; border-radius: 999px;
@@ -456,7 +460,8 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
   .hero-card { padding: 1.5rem 1.3rem; }
   .site-header { top: 10px; }
   .nav { width: calc(100% - 2rem); justify-content: space-between; gap: .2rem; padding: 0 .3rem 0 .5rem; }
-  .nav-brand { display: none; }
+  .nav-brand { width: 30px; height: 30px; margin-left: 0; }
+  .nav-brand svg { width: 22px; height: 22px; }
   .nav-links { gap: 0; }
   .nav-links a { padding: .95rem .55rem; font-size: .66rem; letter-spacing: .08em; } /* 44 pt touch targets */
   .theme-toggle { width: 44px; height: 44px; }
@@ -471,6 +476,7 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
 }
 
 @media (max-width: 360px) {
+  .nav-brand { display: none; }
   .nav-links a { padding: .5rem .4rem; letter-spacing: .04em; }
   .hero .eyebrow { letter-spacing: .14em; }
 }
