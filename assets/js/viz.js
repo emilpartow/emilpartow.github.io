@@ -396,7 +396,7 @@
       bar(pad, "kernel score", `+${ks.toFixed(2)}`, ks / 0.6, C.accent);
       bar(pad + 18, "log-likelihood", `+${kl >= 100 ? kl.toFixed(0) : kl.toFixed(1)}`, kl / 6, kl > 6 ? C.ink : C.soft);
 
-      if (out) out.textContent = `μ = ${mu.toFixed(2)}, σ = ${sig.toFixed(2)}`;
+      if (out) out.textContent = `μ = ${mu < 0 ? "−" : "+"}${Math.abs(mu).toFixed(2)}, σ = ${sig.toFixed(2)}`; // fixed width: always a sign, two decimals
     };
   }
 

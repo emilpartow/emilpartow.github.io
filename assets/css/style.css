@@ -308,6 +308,9 @@ pre code { background: none; padding: 0; }
 .card p { color: var(--ink-soft); font-size: .96rem; }
 .card-link { margin: -.3rem 0 1rem !important; }
 .card-link a { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+/* live numbers in the hints: equal-width digits and no line break inside, so the text does not jump */
+[data-out] { display: inline-block; white-space: nowrap; font-variant-numeric: tabular-nums; }
+[data-out="kernel"] { min-width: 10em; } /* Futura has no tabular figures: reserve the widest value */
 .viz-hint { margin: auto 0 0 !important; padding-top: .4rem; font-size: .75rem !important; color: var(--muted) !important; letter-spacing: .02em; }
 
 
