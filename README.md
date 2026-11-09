@@ -37,7 +37,7 @@ Opening `index.html` directly also works. Only the self-hosted fallback font is 
 1. Konami code (↑ ↑ ↓ ↓ ← → ← → B A) heats the density behind the hero, which then cools down.
 2. Type `qed` anywhere.
 3. Click the ∎ at the very bottom, several times.
-4. Switch to another tab and look at the tab title.
+4. Switch to another tab and look at the tab title (it changes every time).
 5. Open the browser console.
 6. Visit any page that does not exist.
 7. Click anywhere in the hero: the density behind the card is pulled towards the click and swings back.

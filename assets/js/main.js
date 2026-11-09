@@ -186,7 +186,15 @@
 
   // 5. The tab title when you look away
   const title = document.title;
+  const away = [
+    "σ grows while you're away…",
+    "P(you come back) ≈ 0.99",
+    "Still uncertain without you…",
+    "Waiting for the posterior to update…",
+    "∇ still converging…",
+  ];
+  let awayIdx = Math.floor(Math.random() * away.length);
   document.addEventListener("visibilitychange", () => {
-    document.title = document.hidden ? "∇ still converging…" : title;
+    document.title = document.hidden ? away[awayIdx++ % away.length] : title;
   });
 })();
