@@ -66,7 +66,19 @@
   if (hero && soft && sharp) {
     const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let range = 1; // read layout on resize only, so scrolling stays cheap
-    const layout = () => { range = Math.max(hero.offsetHeight - window.innerHeight, window.innerHeight * 0.6); };
+    const stage = $(".hero-stage"), card = $(".hero-card");
+    const layout = () => {
+      // measure whether the card (and the scroll cue below it) fits on the sticky stage; if not, the card
+      // simply scrolls, and the cue hides rather than peeking out from under the card
+      hero.classList.remove("hero-static", "hero-no-cue");
+      if (getComputedStyle(stage).position === "sticky") {
+        const cs = getComputedStyle(stage);
+        const need = parseFloat(cs.paddingTop) + card.offsetHeight + parseFloat(cs.paddingBottom);
+        if (need > window.innerHeight) hero.classList.add("hero-static");
+        else if (need + 52 > window.innerHeight) hero.classList.add("hero-no-cue");
+      }
+      range = Math.max(hero.offsetHeight - window.innerHeight, window.innerHeight * 0.6);
+    };
     const progress = () => {
       const p = still ? 1 : Math.min(1, Math.max(0, -hero.getBoundingClientRect().top / range));
       hero.style.setProperty("--p", p.toFixed(3));
@@ -75,6 +87,7 @@
     };
     layout(); progress();
     window.addEventListener("resize", () => { layout(); progress(); });
+    document.fonts?.ready.then(() => { layout(); progress(); }); // the card's height settles once the font is in
     window.addEventListener("scroll", progress, { passive: true });
   }
 
