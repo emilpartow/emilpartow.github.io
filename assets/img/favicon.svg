@@ -1,10 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <style>
-    .c { fill: none; stroke: #111214; stroke-width: 4.2; }
-    .m { fill: #0a7c5a; }
-    @media (prefers-color-scheme: dark) { .c { stroke: #f0efec; } .m { fill: #3dd6a3; } }
-  </style>
-  <ellipse class="c" cx="32" cy="32" rx="27" ry="15.5" transform="rotate(-25 32 32)"/>
-  <ellipse class="c" cx="32" cy="32" rx="14.5" ry="8.2" transform="rotate(-25 32 32)"/>
-  <circle class="m" cx="32" cy="32" r="5.5"/>
+  <!-- the contour mark, bold enough to read at 16 px in a browser tab -->
+  <rect width="64" height="64" rx="15" fill="#0a7c5a"/>
+  <g fill="none" stroke="#fff" stroke-width="6">
+    <ellipse cx="32" cy="32" rx="23" ry="13" transform="rotate(-25 32 32)"/>
+  </g>
+  <circle cx="32" cy="32" r="6.5" fill="#fff"/>
 </svg>
