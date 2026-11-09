@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 · Emil Partow</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <script>(function(){try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}})();</script>
+  <link rel="stylesheet" href="/assets/css/style.css?v=20261110n">
+  <style>
+    /* the site's pattern: a dot grid over a soft density, with the message on glass */
+    .nf {
+      min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 2rem;
+      background:
+        radial-gradient(circle, color-mix(in srgb, var(--muted) 50%, transparent) 1px, transparent 1.4px) center / 24px 24px,
+        radial-gradient(40% 45% at 22% 30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+        radial-gradient(35% 40% at 80% 72%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%),
+        var(--bg);
+    }
+    .nf .card404 { padding: clamp(2rem, 6vw, 3.6rem); border-radius: 34px; max-width: 36rem; }
+    .nf h1 { font-size: clamp(4rem, 14vw, 8rem); letter-spacing: -0.03em; line-height: 1; margin-bottom: 1.5rem; }
+    .nf .proof { max-width: 30em; margin: 0 auto 2.5rem; color: var(--ink-soft); }
+    .nf .proof em { color: var(--ink); font-style: normal; }
+    .nf .home { font-size: .78rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+  <main class="nf">
+    <div class="card404 glass">
+      <p class="eyebrow">Proof by contradiction</p>
+      <h1>404</h1>
+      <p class="proof">
+        Suppose this page exists. Then you would be reading it.
+        But you are reading <em>this</em> page instead, a contradiction.
+        Hence the page does not exist. ∎
+      </p>
+      <a class="home" href="/">← Return to a well-defined state</a>
+    </div>
+  </main>
+</body>
+</html>

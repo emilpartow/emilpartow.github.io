@@ -1,0 +1,488 @@
+/* ==========================================================================
+   Emil Partow · personal academic site
+   Plain CSS. Futura where installed, self-hosted Jost (OFL) everywhere else.
+   Apple-inspired: floating glass navigation, a glass intro card over a live
+   probability density that sharpens as you scroll, large two-tone section titles.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/jost-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Jost";
+  src: url("../fonts/jost-var-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --bg: #f7f7f5;
+  --surface: #ffffff;
+  --ink: #111214;
+  --ink-soft: #4f525a;
+  --muted: #6b6e75;
+  --line: #e6e5e1;
+  --accent: #0a7c5a;
+  --accent-soft: rgba(10, 124, 90, 0.08);
+  --on-accent: #ffffff;
+  --photo-brightness: 1.1;
+  --logo-filter: none;
+  --logo-thin: brightness(.55) contrast(1.3);
+
+  /* liquid glass */
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.75);
+  --glass-hi: rgba(255, 255, 255, 0.95);
+  --glass-lo: rgba(17, 18, 20, 0.05);
+  --glass-shadow: 0 30px 80px -30px rgba(25, 30, 70, 0.28), 0 4px 14px rgba(25, 30, 70, 0.06);
+  --card-shadow: 0 1px 2px rgba(17, 18, 20, 0.04), 0 12px 32px -18px rgba(17, 18, 20, 0.18);
+
+  --font: "Futura PT", Futura, "Jost", "Century Gothic", "Avenir Next", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --maxw: 1080px;
+  --radius: 22px;
+}
+
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c0d0f;
+  --surface: #16171a;
+  --ink: #f0efec;
+  --ink-soft: #b0b2b8;
+  --muted: #8d9097;
+  --line: #24262b;
+  --accent: #3dd6a3;
+  --accent-soft: rgba(61, 214, 163, 0.1);
+  --on-accent: #0c0d0f;
+  --photo-brightness: .96;
+  --logo-filter: invert(1) hue-rotate(180deg);
+  --logo-thin: brightness(1.7);
+  --glass-bg: rgba(30, 31, 36, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-hi: rgba(255, 255, 255, 0.16);
+  --glass-lo: rgba(0, 0, 0, 0.35);
+  --glass-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -18px rgba(0, 0, 0, 0.6);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c0d0f;
+    --surface: #16171a;
+    --ink: #f0efec;
+    --ink-soft: #b0b2b8;
+    --muted: #8d9097;
+    --line: #24262b;
+    --accent: #3dd6a3;
+    --accent-soft: rgba(61, 214, 163, 0.1);
+    --on-accent: #0c0d0f;
+    --photo-brightness: .96;
+    --logo-filter: invert(1) hue-rotate(180deg);
+    --logo-thin: brightness(1.7);
+    --glass-bg: rgba(30, 31, 36, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-hi: rgba(255, 255, 255, 0.16);
+    --glass-lo: rgba(0, 0, 0, 0.35);
+    --glass-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7), 0 4px 14px rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -18px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+/* one dot grid for the whole page, like a sheet of graph paper under everything. It sits on the
+   root element, so it also fills the overscroll area when you pull past the top or the bottom
+   (rubber-banding on macOS and iOS, pull to refresh). Text always sits on solid or glass surfaces. */
+html {
+  scroll-behavior: smooth; scroll-padding-top: 96px; -webkit-text-size-adjust: 100%;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--muted) 40%, transparent) 1px, transparent 1.4px);
+  background-size: 24px 24px; background-position: center top;
+  transition: background-color .3s ease;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 400 17px/1.7 var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: color .3s ease;
+}
+
+
+h1, h2, h3 { font-weight: 500; line-height: 1.15; margin: 0; }
+p { margin: 0 0 1em; }
+a { color: var(--accent); text-decoration: none; }
+a, button { -webkit-tap-highlight-color: transparent; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+sup { font-size: .7em; }
+::selection { background: var(--accent); color: var(--on-accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.container { width: min(100% - 3rem, var(--maxw)); margin-inline: auto; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; left: -999px; top: 0; background: var(--ink); color: var(--bg); padding: .5rem 1rem; z-index: 100; }
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+code { font: .86em var(--mono); background: color-mix(in srgb, var(--ink) 6%, transparent); padding: .1em .35em; border-radius: 4px; }
+pre code { background: none; padding: 0; }
+
+/* ---------- liquid glass ----------
+   Translucent fill, strong backdrop blur with extra saturation, a bright top edge
+   and a darker bottom edge (light catching a curved surface), and a soft sheen. */
+.glass {
+  position: relative; isolation: isolate;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+          backdrop-filter: blur(26px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hi), inset 0 -1px 0 var(--glass-lo), var(--glass-shadow);
+}
+.glass::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background:
+    radial-gradient(120% 70% at 15% 0%, color-mix(in srgb, var(--glass-hi) 55%, transparent), transparent 55%),
+    linear-gradient(180deg, transparent 60%, color-mix(in srgb, var(--glass-lo) 60%, transparent));
+  opacity: .7;
+}
+
+/* ---------- header: a floating glass capsule ---------- */
+.site-header {
+  position: fixed; top: 14px; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: center; pointer-events: none;
+}
+.nav {
+  pointer-events: auto;
+  display: flex; align-items: center; gap: 1.6rem;
+  height: 52px; padding: 0 .6rem 0 1.3rem; border-radius: 999px;
+}
+.nav-brand { font-weight: 700; font-size: .9rem; letter-spacing: .18em; color: var(--ink); }
+.nav-brand:hover { text-decoration: none; color: var(--accent); }
+.nav-links { display: flex; gap: .3rem; list-style: none; margin: 0; padding: 0; }
+.nav-links a {
+  display: block; padding: .38rem .85rem; border-radius: 999px;
+  color: var(--ink-soft); font-size: .76rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  transition: color .2s, background-color .2s;
+}
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+.nav-links a.active { color: var(--ink); background: color-mix(in srgb, var(--ink) 7%, transparent); }
+
+/* theme toggle: a half-filled disc */
+.theme-toggle {
+  width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer;
+  display: grid; place-items: center; transition: background-color .2s;
+}
+.theme-toggle:hover { background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.theme-dot {
+  width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--ink);
+  background: linear-gradient(90deg, var(--ink) 50%, transparent 50%);
+  transition: transform .5s cubic-bezier(.6, 0, .2, 1);
+}
+.theme-toggle:hover .theme-dot { transform: rotate(180deg); }
+
+/* ---------- hero ----------
+   The stage holds still for a short stretch of scrolling; meanwhile the density behind the card
+   contracts and comes into focus. viz.js sets the scroll progress --p (0 → 1) on .hero. */
+.hero { --p: 0; position: relative; height: 140svh; }
+/* the hero's colour continues above the page, so pulling down past the top (rubber-banding) stays petrol */
+.hero::before {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 70vh; pointer-events: none;
+  background: radial-gradient(70% 90% at 50% 100%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 75%);
+}
+.hero-stage {
+  position: sticky; top: 0; height: 100svh; overflow: hidden;
+  display: grid; place-items: center; padding: 84px 0 40px;
+}
+/* the same tiny canvas twice: scaled up smoothly (soft) and pixelated (sharp), cross-faded */
+#flow, #flow-sharp { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none; }
+#flow, #flow-sharp {
+  -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 60%, transparent 100%);
+}
+#flow { image-rendering: auto; }
+#flow-sharp { image-rendering: pixelated; image-rendering: crisp-edges; opacity: 0; }
+
+.hero-card {
+  z-index: 2; width: min(100% - 3rem, var(--maxw));
+  display: grid; grid-template-columns: 1.3fr .7fr; gap: 3.5rem; align-items: center;
+  padding: clamp(2rem, 4.5vw, 3.6rem); border-radius: 34px;
+}
+.scroll-cue {
+  position: absolute; z-index: 1; bottom: 26px; left: 50%; translate: -50% 0;
+  width: 24px; height: 38px; border-radius: 999px; border: 1.5px solid var(--muted);
+  opacity: calc(.8 - var(--p) * 4);
+}
+.scroll-cue span {
+  position: absolute; left: 50%; top: 7px; width: 4px; height: 7px; margin-left: -2px; border-radius: 2px;
+  background: var(--muted); animation: cue 1.8s ease-in-out infinite;
+}
+@keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(12px); opacity: 0; } 100% { opacity: 0; } }
+
+.eyebrow {
+  font-size: .74rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-size: clamp(2.8rem, 6.4vw, 5rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1;
+  margin-bottom: 1rem;
+}
+.lead a { color: var(--ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 55%, transparent); text-underline-offset: 3px; }
+.lead a:hover { color: var(--accent); }
+.lead { font-size: 1.16rem; line-height: 1.6; color: var(--ink-soft); max-width: 33em; margin-bottom: 1.8rem; }
+
+.links { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
+.links a {
+  display: block; padding: .5rem .95rem; border-radius: 999px;
+  color: var(--ink); font-size: .74rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 9%, transparent);
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.links a:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); text-decoration: none; }
+.links li:first-child a { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.links li:first-child a:hover { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+.greet { font: inherit; color: inherit; letter-spacing: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.greet:hover { color: var(--accent); }
+
+/* affiliations: quiet and monochrome, in color on hover */
+.orgs { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 2rem; list-style: none; padding: 1.6rem 0 0; margin: 2rem 0 0; border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent); }
+.orgs a {
+  display: flex; align-items: center; gap: .55rem; color: var(--ink-soft);
+  filter: grayscale(1); opacity: .7; transition: filter .3s ease, opacity .3s ease;
+}
+.orgs a:hover { filter: none; opacity: 1; text-decoration: none; }
+.orgs img { display: block; width: auto; }
+.org-lmu { height: 28px; }
+.org-mcml { height: 13px; filter: var(--logo-filter); }
+.org-meteor { height: 24px; filter: var(--logo-filter); }
+.orgs span { font-size: .74rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.org-math4ai { height: 40px; filter: var(--logo-thin); } /* thin green lines: more contrast while grey */
+
+.hero-photo { margin: 0; justify-self: end; width: 100%; max-width: 330px; }
+.hero-photo img {
+  display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+  border-radius: 22px; background: var(--line);
+  filter: brightness(var(--photo-brightness)) contrast(1.02);
+  box-shadow: 0 20px 50px -25px rgba(17, 18, 20, 0.45);
+}
+
+/* ---------- sections ---------- */
+.section { padding: 7rem 0; }
+.section-head { margin-bottom: 3rem; }
+.section-head h2 {
+  font-size: clamp(2rem, 4.4vw, 3.3rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.08;
+  max-width: 19em;
+}
+.section-head h2 span { color: var(--muted); }
+.section-head h2 a { color: inherit; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.section-head h2 a:hover { color: var(--accent); }
+
+/* ---------- research: a bento of themes ---------- */
+.cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; }
+.card {
+  display: flex; flex-direction: column; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--line); overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s ease, border-color .3s ease;
+}
+/* hover effects only where there is a real pointer, so nothing sticks after a tap on a phone */
+@media (hover: hover) {
+  .card:hover { transform: translateY(-3px); box-shadow: var(--card-shadow), 0 24px 50px -30px color-mix(in srgb, var(--accent) 45%, transparent); }
+  .card.reveal.visible:hover { transform: translateY(-3px); }
+}
+.viz { display: block; width: 100%; aspect-ratio: 16 / 9; border-bottom: 1px solid var(--line); cursor: crosshair; touch-action: pan-y; }
+.card-body { padding: 1.4rem 1.5rem 1.3rem; display: flex; flex-direction: column; flex: 1; }
+.card-index { font-size: .72rem; letter-spacing: .2em; color: var(--accent); margin-bottom: .5rem; font-weight: 500; }
+.card h3 { font-size: 1.3rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: .55rem; }
+.card p { color: var(--ink-soft); font-size: .96rem; }
+.card-link { margin: -.3rem 0 1rem !important; }
+.card-link a { font-size: .72rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; }
+.viz-hint { margin: auto 0 0 !important; padding-top: .4rem; font-size: .75rem !important; color: var(--muted) !important; letter-spacing: .02em; }
+
+
+/* ---------- publications ---------- */
+.pubs { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.1rem; }
+.pub {
+  display: grid; grid-template-columns: 120px 1fr; gap: 1.5rem;
+  padding: 1.8rem 2rem; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line);
+  box-shadow: var(--card-shadow);
+}
+.pub-meta { display: flex; flex-direction: column; gap: .3rem; }
+.pub-year { font-size: 1rem; font-weight: 600; }
+.pub-venue { font-size: .7rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.pub-title { font-size: 1.22rem; font-weight: 600; letter-spacing: -0.01em; margin-bottom: .35rem; }
+.pub-title a { color: var(--ink); }
+.pub-title a:hover { color: var(--accent); text-decoration: none; }
+.pub-authors { color: var(--ink-soft); font-size: .95rem; margin-bottom: .6rem; }
+.pub-tldr { color: var(--muted); font-size: .92rem; max-width: 46em; margin-bottom: .9rem; }
+.pub-authors .me { color: var(--ink); font-weight: 500; text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+.pub-actions { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip {
+  font: 500 .7rem/1 var(--font); letter-spacing: .12em; text-transform: uppercase;
+  padding: .5rem .8rem; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink-soft);
+  transition: color .15s, border-color .15s, background .15s;
+}
+.chip:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+.chip[aria-expanded="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.bibtex { position: relative; margin-top: .9rem; }
+.bibtex pre {
+  margin: 0; padding: 1rem 1.1rem; overflow-x: auto; border-radius: 14px;
+  background: var(--bg); border: 1px solid var(--line); font: .8rem/1.6 var(--mono); color: var(--ink-soft);
+}
+.copy-btn {
+  position: absolute; top: .6rem; right: .6rem; font: 500 .68rem/1 var(--font); letter-spacing: .12em; text-transform: uppercase;
+  padding: .45rem .7rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink-soft); cursor: pointer;
+}
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ---------- news ---------- */
+.timeline {
+  list-style: none; margin: 0; padding: .6rem 2rem;
+  border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); box-shadow: var(--card-shadow);
+}
+.timeline li { display: grid; grid-template-columns: 150px 1fr; gap: 1.5rem; padding: 1rem 0; }
+.timeline li + li { border-top: 1px solid var(--line); }
+.timeline time { font-size: .75rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding-top: .2rem; }
+.timeline p { margin: 0; }
+
+/* ---------- outro ----------
+   The pattern from the top comes back behind contact and footer, already in its sharp,
+   converged state. It fades in from the page background, so the page ends where it began. */
+.outro { position: relative; overflow: hidden; padding-top: 6rem; }
+#flow-end {
+  position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; pointer-events: none;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+}
+#flow-end {
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 45%, #000 75%, transparent 100%);
+          mask-image: linear-gradient(180deg, transparent 0, #000 45%, #000 75%, transparent 100%);
+}
+.outro > .section, .outro > .site-footer { position: relative; z-index: 2; }
+.contact { padding: 4rem 0 3rem; }
+.contact-card { padding: clamp(2rem, 4.5vw, 3.6rem); border-radius: 34px; }
+.contact-card .section-head { margin-bottom: 2rem; }
+
+/* ---------- contact ---------- */
+.contact-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 3rem; }
+.contact-lead { font-size: 1.5rem; line-height: 1.45; }
+address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
+
+/* ---------- footer ---------- */
+.site-footer { padding: 2.5rem 0 3rem; font-size: .8rem; color: var(--muted); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; padding-top: .5rem; }
+.footer-inner p { margin: 0; letter-spacing: .06em; }
+.qed {
+  font: 1rem/1 var(--font); color: var(--muted); background: none; border: 0; padding: .2rem; cursor: pointer;
+  transition: color .2s, transform .3s;
+}
+@media (hover: hover) { .qed:hover { color: var(--accent); transform: scale(1.3); } }
+
+/* ---------- toast (easter eggs), also glass ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 2rem; z-index: 200; transform: translate(-50%, 1rem);
+  padding: .75rem 1.2rem; border-radius: 999px; color: var(--ink);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px 0 var(--glass-hi), var(--glass-shadow);
+  font-size: .85rem; letter-spacing: .02em; text-align: center;
+  width: max-content; max-width: calc(100vw - 2rem); border-radius: 22px;
+  opacity: 0; pointer-events: none; transition: opacity .3s ease, transform .3s ease;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- reveal on scroll ---------- */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s cubic-bezier(.2, .7, .2, 1); }
+.reveal.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* ---------- responsive ---------- */
+/* small or short screens: no sticky stage, the card simply scrolls */
+@media (max-width: 880px), (max-height: 720px) {
+  .hero { height: auto; }
+  .hero-stage { position: relative; height: auto; min-height: 0; padding: 92px 0 2.5rem; }
+  .scroll-cue { display: none; }
+}
+
+@media (max-width: 880px) {
+  /* name block on the left, portrait on the right; text and links below at full width */
+  .hero-card {
+    grid-template-columns: 1fr clamp(104px, 24vw, 170px); column-gap: 1.2rem; row-gap: 0;
+    grid-template-rows: auto auto 1fr auto auto auto; /* a tall portrait stretches the empty row below the name, not the gap above it */
+    align-items: start; border-radius: 28px;
+  }
+  .hero-text { display: contents; }
+  .hero-text > * { grid-column: 1 / -1; }
+  .hero .eyebrow { grid-row: 1; }
+  .hero h1 { grid-row: 2; grid-column: 1; }
+  .hero .lead { grid-row: 4; margin-top: 1.4rem; }
+  .hero .links { grid-row: 5; }
+  .hero .orgs { grid-row: 6; }
+  .hero-photo { grid-row: 2 / span 2; grid-column: 2; align-self: center; justify-self: end; }
+  .hero-photo img { border-radius: 16px; }
+  .contact-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .section { padding: 5rem 0; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .container, .hero-card { width: min(100% - 2rem, var(--maxw)); }
+  .hero-card { padding: 1.5rem 1.3rem; }
+  .site-header { top: 10px; }
+  .nav { width: calc(100% - 2rem); justify-content: space-between; gap: .2rem; padding: 0 .3rem 0 .5rem; }
+  .nav-brand { display: none; }
+  .nav-links { gap: 0; }
+  .nav-links a { padding: .95rem .55rem; font-size: .66rem; letter-spacing: .08em; } /* 44 pt touch targets */
+  .theme-toggle { width: 44px; height: 44px; }
+  .cards { grid-template-columns: 1fr; }
+  .viz[data-viz="autoresearch"] { aspect-ratio: 16 / 10; } /* two scenes side by side need a little more height on a phone */
+  .lead { font-size: 1.05rem; }
+  .pub, .timeline li { grid-template-columns: 1fr; gap: .35rem; }
+  .pub { padding: 1.4rem 1.3rem; }
+  .timeline { padding: .3rem 1.3rem; }
+  .hero h1 { font-size: 2.3rem; }
+  .hero .eyebrow { margin-bottom: 1rem; font-size: .68rem; }
+  .contact-lead { font-size: 1.25rem; }
+}
+
+@media (max-width: 360px) {
+  .nav-links a { padding: .5rem .4rem; letter-spacing: .04em; }
+  .hero .eyebrow { letter-spacing: .14em; }
+}
+
+/* people who ask for less transparency, and browsers without backdrop blur, get solid surfaces */
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .toast { background: var(--surface) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .toast { background: var(--surface); }
+}
+@media (forced-colors: active) {
+  .glass, .card, .pub { border: 1px solid CanvasText; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero { height: auto; }
+  .hero-stage { position: relative; height: auto; min-height: 100svh; }
+  .scroll-cue span { animation: none; }
+}
+
+@media print {
+  .site-header, #flow, #flow-sharp, #flow-end, .theme-toggle, .pub-actions, .viz, .toast, .scroll-cue { display: none !important; }
+  html, body { background: #fff; color: #000; }
+  .hero { height: auto; }
+  .hero-stage { position: static; height: auto; }
+  .glass { background: none; box-shadow: none; border: 0; }
+  .reveal { opacity: 1; transform: none; }
+}

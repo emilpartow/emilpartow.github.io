@@ -1,0 +1,4 @@
+# CV sources stay private (they contain a phone number); only assets/cv.pdf is published
+_cv/
+.DS_Store
+.claude/

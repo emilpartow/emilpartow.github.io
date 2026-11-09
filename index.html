@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emil Partow · Uncertainty Quantification · LMU Munich</title>
+  <meta name="description" content="Emil Partow, PhD student at LMU Munich (Chair for Mathematical Foundations of AI, MCML): uncertainty quantification, probabilistic regression and kernel scores.">
+  <meta name="author" content="Emil Partow">
+  <link rel="canonical" href="https://emilpartow.github.io/">
+
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:site_name" content="Emil Partow">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Emil Partow · Uncertainty Quantification · LMU Munich">
+  <meta property="og:description" content="PhD student at LMU Munich working on uncertainty quantification: probabilistic regression, kernel scores and models that know what they do not know.">
+  <meta property="og:url" content="https://emilpartow.github.io/">
+  <meta property="og:image" content="https://emilpartow.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Emil Partow, PhD student at LMU Munich, uncertainty quantification for machine learning">
+  <meta property="profile:first_name" content="Emil">
+  <meta property="profile:last_name" content="Partow">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Emil Partow · Uncertainty Quantification · LMU Munich">
+  <meta name="twitter:description" content="PhD student at LMU Munich working on uncertainty quantification, probabilistic regression and kernel scores.">
+  <meta name="twitter:image" content="https://emilpartow.github.io/assets/img/og.jpg">
+  <meta name="twitter:image:alt" content="Emil Partow, PhD student at LMU Munich, uncertainty quantification for machine learning">
+
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0c0d0f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Emil Partow">
+
+  <!-- Apply the saved theme before first paint to avoid a flash -->
+  <script>
+    (function () {
+      try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css?v=20261110n">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfilePage",
+        "@id": "https://emilpartow.github.io/#page",
+        "url": "https://emilpartow.github.io/",
+        "name": "Emil Partow · Uncertainty Quantification · LMU Munich",
+        "inLanguage": "en",
+        "mainEntity": { "@id": "https://emilpartow.github.io/#person" }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://emilpartow.github.io/#person",
+        "name": "Emil Partow",
+        "givenName": "Emil",
+        "familyName": "Partow",
+        "jobTitle": "PhD Student",
+        "description": "PhD student in the mathematical foundations of AI at LMU Munich, working on uncertainty quantification for machine learning.",
+        "email": "mailto:emil.partow@math.lmu.de",
+        "url": "https://emilpartow.github.io/",
+        "image": "https://emilpartow.github.io/assets/img/portrait-square.jpg",
+        "sameAs": [
+          "https://scholar.google.com/citations?user=fLbsY5wAAAAJ",
+          "https://www.linkedin.com/in/emil-partow-1a568a16a/"
+        ],
+        "knowsAbout": [
+          "Uncertainty quantification", "Probabilistic regression", "Kernel scores", "Proper scoring rules",
+          "Engression", "Probabilistic forecasting", "Statistical learning theory", "Generative models",
+          "Autoresearch", "AI agents for research"
+        ],
+        "affiliation": [
+          {
+            "@type": "Organization",
+            "name": "Chair for Mathematical Foundations of Artificial Intelligence (MATH4AI)",
+            "url": "https://www.math.lmu.de/math4ai/en/",
+            "parentOrganization": { "@type": "CollegeOrUniversity", "name": "LMU Munich", "url": "https://www.lmu.de/en/" }
+          },
+          { "@type": "ResearchOrganization", "name": "Munich Center for Machine Learning (MCML)", "url": "https://mcml.ai/" },
+          { "@type": "Organization", "name": "DFG Research Training Group METEOR", "url": "https://rtg-meteor.de/" }
+        ],
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "Technische Universität Berlin", "url": "https://www.tu.berlin/" },
+        "address": { "@type": "PostalAddress", "streetAddress": "Akademiestraße 7", "postalCode": "80799", "addressLocality": "München", "addressCountry": "DE" }
+      },
+      {
+        "@type": "ScholarlyArticle",
+        "headline": "SCORE: Spectral Correlation Estimation for Multivariate Gaussians",
+        "author": [
+          { "@type": "Person", "name": "Christopher Bülte" },
+          { "@id": "https://emilpartow.github.io/#person" },
+          { "@type": "Person", "name": "Astha Gupta" },
+          { "@type": "Person", "name": "Pascal Esser" },
+          { "@type": "Person", "name": "Gitta Kutyniok" }
+        ],
+        "datePublished": "2026-10",
+        "url": "https://arxiv.org/abs/2610.12096",
+        "sameAs": "https://arxiv.org/pdf/2610.12096"
+      },
+      {
+        "@type": "ScholarlyArticle",
+        "headline": "Consistency of Learned Sparse Grid Quadrature Rules using NeuralODEs",
+        "author": [
+          { "@type": "Person", "name": "Hanno Gottschalk" },
+          { "@id": "https://emilpartow.github.io/#person" },
+          { "@type": "Person", "name": "Tobias J. Riedlinger" }
+        ],
+        "datePublished": "2025-07",
+        "url": "https://arxiv.org/abs/2507.01533",
+        "sameAs": "https://arxiv.org/pdf/2507.01533"
+      }
+    ]
+  }
+  </script>
+</head>
+
+<!-- ↑ ↑ ↓ ↓ ← → ← → b a -->
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav glass" aria-label="Main">
+      <a class="nav-brand" href="#top" aria-label="Back to top">EP</a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Papers</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="false">
+        <span class="theme-dot" aria-hidden="true"></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero-stage">
+      <!-- a density behind the card: soft at the top, sharper as you scroll -->
+      <canvas id="flow" aria-hidden="true"></canvas>
+      <canvas id="flow-sharp" aria-hidden="true"></canvas>
+      <div class="hero-card glass">
+        <div class="hero-text">
+          <p class="eyebrow">Emil Partow · PhD Student · Mathematical Foundations of AI</p>
+          <h1><button class="greet" type="button" title="Click for another greeting">Hi</button>, I’m Emil<span class="sr-only"> Partow</span>.</h1>
+          <p class="lead">
+            I am a first-year PhD student working on uncertainty quantification at the
+            <a href="https://www.math.lmu.de/math4ai/en/">Chair for Mathematical Foundations of AI</a> at
+            <a href="https://www.lmu.de/en/">LMU Munich</a>, led by Prof. Dr. Gitta Kutyniok.
+            In most settings, a model should not only predict, but also say how sure it is.
+            That uncertainty is what makes a prediction safe to act on. My work spans mathematical theory,
+            such as probabilistic regression and kernel scores, and real-world applications. Lately, I have
+            also turned to autoresearch: orchestrating agentic loops that solve research problems in mathematics.
+          </p>
+          <ul class="links" aria-label="Profiles">
+            <li><a href="mailto:emil.partow@math.lmu.de">Email</a></li>
+            <li><a href="https://arxiv.org/search/?searchtype=author&amp;query=Partow%2C+Emil">arXiv</a></li>
+            <li><a href="https://scholar.google.com/citations?user=fLbsY5wAAAAJ" rel="me">Scholar</a></li>
+            <li><a href="https://www.linkedin.com/in/emil-partow-1a568a16a/" rel="me">LinkedIn</a></li>
+            <li><a href="assets/cv.pdf" type="application/pdf">CV</a></li>
+          </ul>
+          <ul class="orgs" aria-label="Affiliations">
+            <li><a href="https://www.lmu.de/en/"><img class="org-lmu" src="assets/img/logos/lmu.svg" alt="LMU Munich" width="362" height="171"></a></li>
+            <li><a href="https://www.math.lmu.de/math4ai/en/" title="Chair for Mathematical Foundations of AI"><img class="org-math4ai" src="assets/img/logos/math4ai.png" alt="MATH4AI, Chair for Mathematical Foundations of AI" width="95" height="108"></a></li>
+            <li><a href="https://mcml.ai/"><img class="org-mcml" src="assets/img/logos/mcml.png" alt="Munich Center for Machine Learning (MCML)" width="480" height="71"></a></li>
+            <li><a href="https://rtg-meteor.de/" title="DFG Research Training Group METEOR"><img class="org-meteor" src="assets/img/logos/meteor.png" alt="" width="171" height="160"><span>RTG METEOR</span></a></li>
+          </ul>
+        </div>
+
+        <figure class="hero-photo">
+          <img src="assets/img/portrait.jpg" alt="Portrait of Emil Partow" width="720" height="900" fetchpriority="high" decoding="async">
+        </figure>
+      </div>
+      <a class="scroll-cue" href="#research" aria-label="Scroll to research"><span></span></a>
+      </div>
+    </section>
+
+    <!-- ============ RESEARCH ============ -->
+    <section class="section container" id="research">
+      <header class="section-head">
+        <h2>Research. <span>Probabilistic prediction, from theory to the real world.</span></h2>
+      </header>
+
+      <div class="cards">
+        <article class="card">
+          <canvas class="viz" data-viz="engression" role="img" aria-label="Regression with uncertainty: data points, the predicted value as a line and a shaded 90 percent range around it that widens and becomes lopsided to the right; on hover the whole predicted distribution at that point"></canvas>
+          <div class="card-body">
+            <p class="card-index">01</p>
+            <h3>Probabilistic regression</h3>
+            <p>In regression it helps to know not only what a model predicts, but also how uncertain it is about it. Probabilistic regression therefore predicts a whole distribution, from parametric families to generative models such as engression. I explore their robustness, their scalability and high-dimensional outputs whose components depend on each other.</p>
+            <p class="card-link"><a href="https://arxiv.org/abs/2610.12096">SCORE paper →</a></p>
+            <p class="viz-hint">Prediction with its 90% range · move over the plot to see the whole predicted distribution</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <canvas class="viz" data-viz="kernel" role="img" aria-label="A Gaussian forecast against the true distribution, with the excess kernel score over its mean and spread; next to it the excess log-likelihood, which blows up for small spreads while the kernel score stays bounded"></canvas>
+          <div class="card-body">
+            <p class="card-index">02</p>
+            <h3>Kernel scores</h3>
+            <p>Most models are trained with the negative log-likelihood, which minimizes the Kullback–Leibler divergence to the data. But the KL is unbounded and can be unstable. In many settings it makes sense to use kernel scores instead: proper scoring rules built from positive-definite kernels that need only samples, stay bounded, and are still minimized only by the true distribution.</p>
+            <p class="viz-hint">Forecast <span data-out="kernel">μ, σ</span> against N(0, 1): kernel score vs log-likelihood · move to change, try a small σ</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <canvas class="viz" data-viz="space" role="img" aria-label="A probe flies from Earth to a target past three asteroids. Its position uncertainty grows with distance from the ground station. A naive route passes close and several flights crash; a robust route keeps a margin that matches the uncertainty and all flights arrive"></canvas>
+          <div class="card-body">
+            <p class="card-index">03</p>
+            <h3>Robust applications</h3>
+            <p>When model uncertainty is ignored, small errors propagate until a decision goes wrong. Imagine a probe on its way through space: the further it gets from its ground station, the less precisely it can be tracked, so small navigation errors add up. If it plans with that uncertainty, it keeps a safe distance from the asteroids and arrives; if it ignores it, it flies too close and crashes. Similar effects hold for forecasting time series and weather. Understanding control mechanisms is part of my work in the RTG METEOR.</p>
+            <p class="viz-hint">Uncertainty grows with distance from the ground station · click to fly again</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <canvas class="viz" data-viz="autoresearch" role="img" aria-label="Two rings of eight agents around a shared memory. Without context management, everything is kept and handed to everyone: the memory overflows, the agents' contexts fill with noise and the best result stalls. With managed context, only a few good results are kept and passed on, and the best result keeps improving"></canvas>
+          <div class="card-body">
+            <p class="card-index">04</p>
+            <h3>Autoresearch</h3>
+            <p>Fascinated by the capabilities of frontier LLMs, I have lately become interested in autoresearch. If every agent is equally good, why are ten thousand of them better than one? I am interested in how to orchestrate them: designing the loops they work in, managing what context each agent gets to see, and verifying what they find.</p>
+            <p class="viz-hint">Same agents, same memory: what matters is what each one gets to see · click to restart</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ PUBLICATIONS ============ -->
+    <section class="section container" id="publications">
+      <header class="section-head">
+        <h2>Publications. <span>Also on <a href="https://scholar.google.com/citations?user=fLbsY5wAAAAJ">Google Scholar</a>.</span></h2>
+      </header>
+
+      <!--
+        TEMPLATE: one <li class="pub"> per paper, newest first.
+        Put your own name in <strong class="me">.
+      -->
+      <ol class="pubs">
+        <li class="pub">
+          <div class="pub-meta">
+            <span class="pub-year">2026</span>
+            <span class="pub-venue">Preprint</span>
+          </div>
+          <div class="pub-body">
+            <h3 class="pub-title"><a href="https://arxiv.org/abs/2610.12096">SCORE: Spectral Correlation Estimation for Multivariate Gaussians</a></h3>
+            <p class="pub-authors">Christopher Bülte, <strong class="me">Emil Partow</strong>, Astha Gupta, Pascal Esser, Gitta Kutyniok</p>
+            <p class="pub-tldr">
+              A scalable framework that learns covariances of high-dimensional Gaussian targets in spectral space,
+              with linear storage and 𝒪(d log d) cost, trained with the closed-form Gaussian kernel score.
+              Includes invariance results for kernel scores and finite-sample PAC bounds. Evaluated on time-series forecasting,
+              monocular depth estimation and spatial weather prediction.
+            </p>
+            <div class="pub-actions">
+              <a class="chip" href="https://arxiv.org/abs/2610.12096">arXiv</a>
+              <a class="chip" href="https://arxiv.org/pdf/2610.12096">PDF</a>
+              <button class="chip bib-toggle" type="button" aria-expanded="false">BibTeX</button>
+            </div>
+            <div class="bibtex" hidden>
+              <pre><code>@article{buelte2026score,
+  title   = {{SCORE}: Spectral Correlation Estimation for Multivariate Gaussians},
+  author  = {B{\"u}lte, Christopher and Partow, Emil and Gupta, Astha and Esser, Pascal and Kutyniok, Gitta},
+  journal = {arXiv preprint arXiv:2610.12096},
+  year    = {2026}
+}</code></pre>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+          </div>
+        </li>
+        <li class="pub">
+          <div class="pub-meta">
+            <span class="pub-year">2025</span>
+            <span class="pub-venue">Preprint</span>
+          </div>
+          <div class="pub-body">
+            <h3 class="pub-title"><a href="https://arxiv.org/abs/2507.01533">Consistency of Learned Sparse Grid Quadrature Rules using NeuralODEs</a></h3>
+            <p class="pub-authors">Hanno Gottschalk, <strong class="me">Emil Partow</strong>, Tobias J. Riedlinger</p>
+            <p class="pub-tldr">
+              Expected values via a learned transport map composed with Clenshaw–Curtis sparse-grid quadrature.
+              We show when the fast mixed-regularity rate survives the transport, learn general transports as
+              ReLU<sup>k+1</sup> neural-ODE flows, and prove that the resulting estimator is PAC consistent.
+            </p>
+            <div class="pub-actions">
+              <a class="chip" href="https://arxiv.org/abs/2507.01533">arXiv</a>
+              <a class="chip" href="https://arxiv.org/pdf/2507.01533">PDF</a>
+              <button class="chip bib-toggle" type="button" aria-expanded="false">BibTeX</button>
+            </div>
+            <div class="bibtex" hidden>
+              <pre><code>@article{gottschalk2025consistency,
+  title   = {Consistency of Learned Sparse Grid Quadrature Rules using {NeuralODEs}},
+  author  = {Gottschalk, Hanno and Partow, Emil and Riedlinger, Tobias J.},
+  journal = {arXiv preprint arXiv:2507.01533},
+  year    = {2025}
+}</code></pre>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ NEWS ============ -->
+    <section class="section container" id="news">
+      <header class="section-head">
+        <h2>News. <span>What happened lately.</span></h2>
+      </header>
+      <ul class="timeline">
+        <li>
+          <time datetime="2026-10">Oct 2026</time>
+          <p>New preprint: <a href="https://arxiv.org/abs/2610.12096">SCORE: Spectral Correlation Estimation for Multivariate Gaussians</a>.</p>
+        </li>
+        <li>
+          <time datetime="2026-06-08">Jun 2026</time>
+          <p>Talk at the <a href="https://zuseschoolrelai.de/how-can-agentic-research-work-in-practice/">relAI Zuse School</a>: <em>The Agentic Researcher: Turning AI Coding Agents into Research Assistants</em>.</p>
+        </li>
+        <li>
+          <time datetime="2026-02">Feb 2026</time>
+          <p>Started my PhD at the <a href="https://www.math.lmu.de/math4ai/en/">Chair for Mathematical Foundations of AI</a>, LMU Munich, supervised by Gitta Kutyniok.</p>
+        </li>
+        <li>
+          <time datetime="2026-01">Jan 2026</time>
+          <p>Kaggle silver medal in <a href="https://www.kaggle.com/competitions/santa-2025">Santa 2025: Christmas Tree Packing Challenge</a>.</p>
+        </li>
+        <li>
+          <time datetime="2025-09">Sep 2025</time>
+          <p><a href="https://mcml.ai/news/2025-10-21-emil-kaggle/">2nd place of 994 teams</a> in the ESA Kaggle competition <a href="https://www.kaggle.com/competitions/fake-or-real-the-impostor-hunt">Fake or Real: The Impostor Hunt</a>.</p>
+        </li>
+        <li>
+          <time datetime="2025-08">Aug 2025</time>
+          <p>Completed my M.Sc. in Business Mathematics at TU Berlin.</p>
+        </li>
+        <li>
+          <time datetime="2025-07">Jul 2025</time>
+          <p>Preprint: <a href="https://arxiv.org/abs/2507.01533">Consistency of Learned Sparse Grid Quadrature Rules using NeuralODEs</a>.</p>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- ============ OUTRO: the pattern from the top returns, converged, behind contact and footer ============ -->
+  <div class="outro">
+    <canvas id="flow-end" aria-hidden="true"></canvas>
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <div class="contact-card glass">
+          <header class="section-head">
+            <h2 id="contact-title">Contact. <span>Say hello.</span></h2>
+          </header>
+          <div class="contact-grid">
+            <p class="contact-lead">
+              Happy to talk about uncertainty and collaborations.
+              E-mail is the best way to reach me.
+            </p>
+            <address>
+              Emil Partow<br>
+              Chair for Mathematical Foundations of AI<br>
+              LMU Munich, Room 509<br>
+              Akademiestraße 7, 80799 München<br>
+              <a href="mailto:emil.partow@math.lmu.de">emil.partow@math.lmu.de</a>
+            </address>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year">2026</span> Emil Partow</p>
+        <button class="qed" type="button" aria-label="Q.E.D.">∎</button>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/viz.js?v=20261110n" defer></script>
+  <script src="assets/js/main.js?v=20261110n" defer></script>
+</body>
+</html>
