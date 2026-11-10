@@ -14,6 +14,11 @@ Please replace everything that is personal with your own: the texts, the portrai
 (nav and favicons), the link preview image, the structured data in the `<head>`, `legal.html` and the
 `google…html` verification file. The institution logos belong to the institutions.
 
+**Licence.** The code (HTML structure, CSS and JavaScript, including the visualizations) is under the
+[MIT License](LICENSE): keep the copyright notice in your copy. The licence does not cover the content:
+the texts, the portrait, the CV, the logo mark and the link preview image remain all rights reserved, and
+the institution logos belong to the institutions. The fallback font Jost comes under the SIL Open Font License.
+
 ## Preview locally
 
 ```sh
