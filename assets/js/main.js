@@ -91,6 +91,24 @@
     window.addEventListener("scroll", progress, { passive: true });
   }
 
+  /* ---------- long lists fold: only the newest data-limit entries show until asked for the rest ---------- */
+  $$("[data-limit]").forEach((list) => {
+    const rest = [...list.children].slice(+list.dataset.limit);
+    if (rest.length < 3) return; // folding away one or two entries is not worth a button
+    rest.forEach((li) => (li.hidden = true));
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "chip more";
+    btn.textContent = `Show ${rest.length} earlier`;
+    btn.addEventListener("click", () => {
+      rest.forEach((li) => (li.hidden = false));
+      btn.remove();
+      rest[0].tabIndex = -1;
+      rest[0].focus({ preventScroll: true }); // keyboard and screen-reader users continue where the list went on
+    });
+    list.after(btn);
+  });
+
   /* ---------- reveal on scroll ---------- */
   const revealables = $$(".section-head, .card, .pub, .timeline, .contact-grid");
   const rio = new IntersectionObserver((entries) => {

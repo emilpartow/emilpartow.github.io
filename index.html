@@ -43,7 +43,7 @@
       try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261110z">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261110z2">
 
   <script type="application/ld+json">
   {
@@ -263,9 +263,10 @@
 
       <!--
         TEMPLATE: one <li class="pub"> per paper, newest first.
+        data-limit: once the list is clearly longer, only the newest entries show, with a "Show earlier" button (main.js).
         Put your own name in <strong class="me">.
       -->
-      <ol class="pubs">
+      <ol class="pubs" data-limit="8">
         <li class="pub">
           <div class="pub-meta">
             <span class="pub-year">2026</span>
@@ -333,7 +334,7 @@
       <header class="section-head">
         <h2>News. <span>What happened lately.</span></h2>
       </header>
-      <ul class="timeline">
+      <ul class="timeline" data-limit="10">
         <li>
           <time datetime="2026-10">Oct 2026</time>
           <p>Took part in the <a href="https://www.hlrs.de/training/2026/hack-ai">European AI Hackathon</a>, co-organized by the Leibniz Supercomputing Centre (LRZ) with NVIDIA, as “the Predictables”: five PhD students from our chair, one of 11 teams selected from 64 applications, mentored by LRZ and NVIDIA. Our question: how do you fine-tune an LLM forecaster when training data is sparse?</p>
@@ -403,7 +404,7 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>© <span id="year">2026</span> Emil Partow</p>
+        <p>© <span id="year">2026</span> Emil Partow<span class="footer-legal"><a href="legal.html#imprint">Imprint</a><a href="legal.html#privacy">Privacy</a></span></p>
         <div class="footer-actions">
           <button class="motion-toggle" type="button">Pause animations</button>
           <button class="qed" type="button" aria-label="Q.E.D.">∎</button>
@@ -414,7 +415,7 @@
 
   <div class="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/viz.js?v=20261110z" defer></script>
-  <script src="assets/js/main.js?v=20261110z" defer></script>
+  <script src="assets/js/viz.js?v=20261110z2" defer></script>
+  <script src="assets/js/main.js?v=20261110z2" defer></script>
 </body>
 </html>
