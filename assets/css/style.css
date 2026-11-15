@@ -234,6 +234,9 @@ pre code { background: none; padding: 0; }
 }
 @keyframes cue { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(12px); opacity: 0; } 100% { opacity: 0; } }
 
+/* the field always gets its own line: name and role above, field below */
+.eyebrow-sep { display: none; }
+.eyebrow-field { display: block; }
 .eyebrow {
   font-size: .74rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase;
   color: var(--muted); margin-bottom: 1.2rem;
@@ -490,11 +493,6 @@ address { font-style: normal; line-height: 1.8; color: var(--ink-soft); }
   .hero .links { grid-row: 4; }
   .hero .orgs { grid-row: 5; }
   .hero-photo { grid-row: 1 / span 3; align-self: start; }
-}
-/* phones and small tablets: the eyebrow breaks after "PhD Student", never leaving a dot at a line end */
-@media (max-width: 880px) {
-  .eyebrow-sep { display: none; }
-  .eyebrow-field { display: block; }
 }
 @media (max-width: 640px) {
   body { font-size: 16px; }
